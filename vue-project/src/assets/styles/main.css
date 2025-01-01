@@ -1,0 +1,191 @@
+:root {
+  /* 顏色變量 */
+  --primary-color: #6366f1;
+  --secondary-color: #4f46e5;
+  --accent-color: #818cf8;
+  --background-color: #0f172a;
+  --card-background: rgba(30, 41, 59, 0.8);
+  --text-color: #f8fafc;
+  --text-muted: #94a3b8;
+  
+  /* 陰影 */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  /* 圓角 */
+  --border-radius: 1rem;
+  --border-radius-lg: 1.5rem;
+  
+  /* 動畫 */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* 全局樣式 */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* 導航列樣式 */
+.navbar {
+  position: fixed;
+  top: env(safe-area-inset-top, 0);
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1rem;
+  padding-top: calc(env(safe-area-inset-top, 0) + 1rem);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 主要內容區域 */
+.main-content {
+  padding-top: calc(env(safe-area-inset-top, 0) + 4rem);
+  min-height: 100vh;
+}
+
+/* 手機版適配 */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.8rem;
+    padding-top: calc(env(safe-area-inset-top, 0) + 0.8rem);
+  }
+
+  .main-content {
+    padding-top: calc(env(safe-area-inset-top, 0) + 3.5rem);
+  }
+}
+
+/* 按鈕樣式 */
+.custom-button {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.custom-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* 容器樣式 */
+.container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .nav-container {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* 動畫效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* 卡片樣式 */
+.card {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* 文字樣式 */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-color);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+p {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+/* 鏈接樣式 */
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+/* 網格系統 */
+.grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .grid-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-3, .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+} 
