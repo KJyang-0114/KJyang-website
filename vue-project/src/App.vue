@@ -70,7 +70,7 @@ const closeMenu = () => {
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  height: 3.5rem;
+  height: 4rem;
 }
 
 .nav-content {
@@ -79,12 +79,12 @@ const closeMenu = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   height: 100%;
 }
 
 .nav-brand {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: bold;
   text-decoration: none;
   color: white;
@@ -93,7 +93,7 @@ const closeMenu = () => {
 
 .nav-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   align-items: center;
 }
 
@@ -103,6 +103,7 @@ const closeMenu = () => {
   opacity: 0.8;
   transition: opacity 0.3s;
   white-space: nowrap;
+  font-size: 1.2rem;
 }
 
 .nav-link:hover {
@@ -176,8 +177,8 @@ const closeMenu = () => {
 
 /* 主要內容區域 */
 .main-content {
-  padding-top: 3.5rem;
-  min-height: calc(100vh - 3.5rem);
+  padding-top: 4rem;
+  min-height: calc(100vh - 4rem);
 }
 
 /* 過渡動畫 */
@@ -207,6 +208,11 @@ const closeMenu = () => {
 
   .nav-brand {
     font-size: 1.1rem;
+  }
+
+  .main-content {
+    padding-top: 3.5rem;
+    min-height: calc(100vh - 3.5rem);
   }
 }
 </style>
