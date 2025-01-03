@@ -10,7 +10,7 @@
         <div class="contact-section">
           <h2 class="section-title">社交媒體</h2>
           <div class="social-links">
-            <a href="https://github.com/kjyang0114-cod" target="_blank" class="social-link">
+            <a href="https://github.com/kjyang-0114" target="_blank" class="social-link">
               <div class="social-icon github">
                 <i class="fab fa-github"></i>
               </div>
