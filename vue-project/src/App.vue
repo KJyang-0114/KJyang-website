@@ -12,10 +12,10 @@
           <router-link to="/videos" class="nav-link">遊戲精華時刻</router-link>
         </div>
 
-        <!-- 手機端漢堡選單 -->
+        <!-- 手機端下拉選單 -->
         <div class="mobile-nav">
           <button class="menu-button" @click="toggleMenu">
-            <i class="fas fa-bars"></i>
+            更多 <i class="fas fa-chevron-down" :class="{ 'rotate': isMenuOpen }"></i>
           </button>
           <div class="mobile-menu" :class="{ 'is-active': isMenuOpen }">
             <router-link to="/about" class="nav-link" @click="closeMenu">關於我</router-link>
@@ -70,6 +70,7 @@ const closeMenu = () => {
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  height: 3.5rem;
 }
 
 .nav-content {
@@ -78,11 +79,12 @@ const closeMenu = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
+  height: 100%;
 }
 
 .nav-brand {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: bold;
   text-decoration: none;
   color: white;
@@ -110,64 +112,72 @@ const closeMenu = () => {
 /* 手機端導航樣式 */
 .mobile-nav {
   display: none;
+  position: relative;
 }
 
 .menu-button {
   background: none;
   border: none;
   color: white;
-  font-size: 1.5rem;
+  font-size: 1rem;
   cursor: pointer;
-  padding: 0.5rem;
-  transition: transform 0.3s ease;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.8;
+  transition: opacity 0.3s;
 }
 
 .menu-button:hover {
-  transform: scale(1.1);
+  opacity: 1;
+}
+
+.menu-button .fa-chevron-down {
+  transition: transform 0.3s ease;
+}
+
+.menu-button .rotate {
+  transform: rotate(180deg);
 }
 
 .mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 250px;
-  height: 100vh;
+  position: absolute;
+  top: 100%;
+  right: 0;
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
-  padding: 4rem 2rem;
-  transition: right 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+  min-width: 150px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .mobile-menu.is-active {
-  right: 0;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .mobile-menu .nav-link {
-  font-size: 1.2rem;
-  padding: 0.5rem;
-  text-align: center;
-  opacity: 0;
-  transform: translateX(20px);
-  transition: all 0.3s ease;
+  padding: 0.75rem 1.5rem;
+  display: block;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.mobile-menu.is-active .nav-link {
-  opacity: 1;
-  transform: translateX(0);
+.mobile-menu .nav-link:last-child {
+  border-bottom: none;
 }
-
-.mobile-menu.is-active .nav-link:nth-child(1) { transition-delay: 0.1s; }
-.mobile-menu.is-active .nav-link:nth-child(2) { transition-delay: 0.2s; }
-.mobile-menu.is-active .nav-link:nth-child(3) { transition-delay: 0.3s; }
 
 /* 主要內容區域 */
 .main-content {
-  padding-top: 4rem;
-  min-height: calc(100vh - 4rem);
+  padding-top: 3.5rem;
+  min-height: calc(100vh - 3.5rem);
 }
 
 /* 過渡動畫 */
@@ -192,17 +202,11 @@ const closeMenu = () => {
   }
 
   .nav-content {
-    padding: 0.8rem 1rem;
+    padding: 0 1rem;
   }
 
   .nav-brand {
-    font-size: 1.2rem;
-  }
-
-  .mobile-menu .nav-link {
-    padding: 0.5rem 0;
     font-size: 1.1rem;
-    text-align: center;
   }
 }
 </style>
