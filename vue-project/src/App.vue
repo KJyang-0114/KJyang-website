@@ -119,23 +119,50 @@ const closeMenu = () => {
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.menu-button:hover {
+  transform: scale(1.1);
 }
 
 .mobile-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 250px;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.95);
-  padding: 1rem;
+  backdrop-filter: blur(10px);
+  padding: 4rem 2rem;
+  transition: right 0.3s ease;
+  display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .mobile-menu.is-active {
-  display: flex;
+  right: 0;
 }
+
+.mobile-menu .nav-link {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.3s ease;
+}
+
+.mobile-menu.is-active .nav-link {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mobile-menu.is-active .nav-link:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu.is-active .nav-link:nth-child(2) { transition-delay: 0.2s; }
+.mobile-menu.is-active .nav-link:nth-child(3) { transition-delay: 0.3s; }
 
 /* 主要內容區域 */
 .main-content {
