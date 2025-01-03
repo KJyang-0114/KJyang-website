@@ -84,7 +84,7 @@ const closeMenu = () => {
 }
 
 .nav-brand {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 600;
   text-decoration: none;
   color: white;
@@ -111,7 +111,7 @@ const closeMenu = () => {
   opacity: 0.8;
   transition: opacity 0.3s;
   white-space: nowrap;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .nav-link:hover {
