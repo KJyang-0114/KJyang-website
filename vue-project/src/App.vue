@@ -84,11 +84,19 @@ const closeMenu = () => {
 }
 
 .nav-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.6rem;
+  font-weight: 600;
   text-decoration: none;
   color: white;
   white-space: nowrap;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+  transition: opacity 0.3s;
+}
+
+.nav-brand:hover {
+  opacity: 0.9;
 }
 
 .nav-links {
@@ -208,6 +216,8 @@ const closeMenu = () => {
 
   .nav-brand {
     font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    text-shadow: none;
   }
 
   .main-content {
