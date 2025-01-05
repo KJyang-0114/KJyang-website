@@ -1,2 +1,24 @@
 服務器運行在 http://0.0.0.0:3000
 服務器運行在 http://0.0.0.0:80
+URIError: Failed to decode param '/cgi-bin/%%32%65%%32%65/%%32%65%%32%65/%%32%65%%32%65/%%32%65%%32%65/%%32%65%%32%65/%%32%65%%32%65/%%32%65%%32%65/bin/sh'
+    at decodeURIComponent (<anonymous>)
+    at decode_param (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/layer.js:172:12)
+    at Layer.match (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/layer.js:123:27)
+    at matchLayer (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/index.js:585:18)
+    at next (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/index.js:226:15)
+    at serveStatic (/Users/kjyang/code/betterwebsite/server/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/index.js:328:13)
+    at /Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/index.js:346:12)
+URIError: Failed to decode param '/cgi-bin/%%32%65%%32%65/%%32%65%%32%65/%%32%65%%32%65/%%32%65%%32%65/%%32%65%%32%65/%%32%65%%32%65/%%32%65%%32%65/bin/sh'
+    at decodeURIComponent (<anonymous>)
+    at decode_param (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/layer.js:172:12)
+    at Layer.match (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/layer.js:123:27)
+    at matchLayer (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/index.js:585:18)
+    at next (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/index.js:226:15)
+    at serveStatic (/Users/kjyang/code/betterwebsite/server/node_modules/serve-static/index.js:75:16)
+    at Layer.handle [as handle_request] (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/index.js:328:13)
+    at /Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/kjyang/code/betterwebsite/server/node_modules/express/lib/router/index.js:346:12)

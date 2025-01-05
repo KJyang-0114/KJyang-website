@@ -9,7 +9,7 @@
         <div class="about-section">
           <h2 class="section-title">Who am I?</h2>
           <div class="text-content">
-            <p>一個來自鶯歌高職資訊科的高中畜，</p>
+            <p>一個來自鶯歌高職資訊科的高中生，</p>
             <p>雖然常常把程式寫成一團亂麻，</p>
             <p>但是我的座右銘是：</p>
             <p class="quote">"不管程式多亂，至少我的心是清晰的" 😎</p>
