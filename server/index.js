@@ -2,13 +2,30 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs').promises;
 const path = require('path');
+const rateLimit = require('express-rate-limit');
+const xss = require('xss');
+const helmet = require('helmet');
 
 const app = express();
 const HOST = '0.0.0.0';
 
+// 安全性中間件
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15分鐘
+  max: 100 // 限制每個IP 15分鐘內最多100個請求
+});
+
+// CORS 配置
+const corsOptions = {
+  origin: 'https://kjyang0114.site',
+  optionsSuccessStatus: 200
+};
+
 // 中間件
-app.use(cors());
-app.use(express.json());
+app.use(helmet());
+app.use(cors(corsOptions));
+app.use(express.json({ limit: '10kb' })); // 限制請求體大小
+app.use('/api', limiter);
 
 // 提供前端靜態文件
 app.use(express.static(path.join(__dirname, '../vue-project/dist')));
@@ -16,7 +33,7 @@ app.use(express.static(path.join(__dirname, '../vue-project/dist')));
 // 數據文件路徑
 const MESSAGES_FILE = path.join(__dirname, 'messages.json');
 
-// 確保數據文件存在
+// 確保數據文件存在並進行安全讀寫
 async function ensureMessagesFile() {
   try {
     await fs.access(MESSAGES_FILE);
@@ -25,12 +42,41 @@ async function ensureMessagesFile() {
   }
 }
 
+// 驗證留言內容
+function validateMessage(name, content) {
+  if (!name || !content) return false;
+  if (name.length > 50 || content.length > 500) return false;
+  if (!/^[\u4e00-\u9fa5a-zA-Z0-9_\s]{1,50}$/.test(name)) return false;
+  return true;
+}
+
+// 安全地讀取留言文件
+async function safeReadMessages() {
+  try {
+    const data = await fs.readFile(MESSAGES_FILE, 'utf8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('讀取留言文件失敗:', error);
+    return [];
+  }
+}
+
+// 安全地寫入留言文件
+async function safeWriteMessages(messages) {
+  try {
+    await fs.writeFile(MESSAGES_FILE, JSON.stringify(messages, null, 2));
+    return true;
+  } catch (error) {
+    console.error('寫入留言文件失敗:', error);
+    return false;
+  }
+}
+
 // 獲取所有留言
 app.get('/api/messages', async (req, res) => {
   try {
     await ensureMessagesFile();
-    const data = await fs.readFile(MESSAGES_FILE, 'utf8');
-    const messages = JSON.parse(data);
+    const messages = await safeReadMessages();
     res.json(messages);
   } catch (error) {
     console.error('讀取留言失敗:', error);
@@ -45,25 +91,35 @@ app.post('/api/messages', async (req, res) => {
     const { name, content, time } = req.body;
     
     // 驗證數據
-    if (!name || !content) {
-      return res.status(400).json({ error: '名字和內容不能為空' });
+    if (!validateMessage(name, content)) {
+      return res.status(400).json({ error: '無效的輸入數據' });
     }
 
+    // XSS 過濾
+    const sanitizedName = xss(name);
+    const sanitizedContent = xss(content);
+
     // 讀取現有留言
-    const data = await fs.readFile(MESSAGES_FILE, 'utf8');
-    const messages = JSON.parse(data);
+    const messages = await safeReadMessages();
 
     // 添加新留言到開頭
     messages.unshift({
-      name,
-      content,
+      name: sanitizedName,
+      content: sanitizedContent,
       time: time || new Date().toLocaleString()
     });
 
-    // 保存到文件
-    await fs.writeFile(MESSAGES_FILE, JSON.stringify(messages, null, 2));
+    // 限制留言總數
+    if (messages.length > 100) {
+      messages.length = 100;
+    }
 
-    res.json({ success: true });
+    // 保存到文件
+    if (await safeWriteMessages(messages)) {
+      res.json({ success: true });
+    } else {
+      res.status(500).json({ error: '無法保存留言' });
+    }
   } catch (error) {
     console.error('保存留言失敗:', error);
     res.status(500).json({ error: '無法保存留言' });
