@@ -17,12 +17,31 @@ const limiter = rateLimit({
 
 // CORS 配置
 const corsOptions = {
-  origin: 'https://kjyang0114.site',
-  optionsSuccessStatus: 200
+  origin: ['https://kjyang0114.site', 'https://drive.google.com'],
+  optionsSuccessStatus: 200,
+  credentials: true
 };
 
 // 中間件
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://drive.google.com"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https:", "http:", "https://drive.google.com"],
+      connectSrc: ["'self'", "https://drive.google.com"],
+      frameSrc: ["'self'", "https://drive.google.com", "https://*.google.com"],
+      frameAncestors: ["'self'", "https://drive.google.com"],
+      objectSrc: ["'none'"],
+      mediaSrc: ["'self'", "https://drive.google.com", "https://*.google.com"],
+      upgradeInsecureRequests: []
+    }
+  },
+  crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginOpenerPolicy: false
+}));
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '10kb' })); // 限制請求體大小
 app.use('/api', limiter);
@@ -131,16 +150,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../vue-project/dist/index.html'));
 });
 
-// 啟動服務器在多個端口
-const ports = [3000, 80];
-ports.forEach(port => {
-  app.listen(port, HOST, () => {
-    console.log(`服務器運行在 http://${HOST}:${port}`);
-  }).on('error', (err) => {
-    if (err.code === 'EACCES') {
-      console.log(`端口 ${port} 需要管理員權限，跳過...`);
-    } else {
-      console.log(`端口 ${port} 啟動失敗:`, err.message);
-    }
-  });
+// 啟動服務器
+app.listen(3000, HOST, () => {
+    console.log(`服務器運行在 http://${HOST}:3000`);
+}).on('error', (err) => {
+    console.log(`服務器啟動失敗:`, err.message);
 }); 

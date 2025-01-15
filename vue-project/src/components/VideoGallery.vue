@@ -35,8 +35,13 @@
           <iframe
             :src="getVideoEmbedUrl(currentVideo.url)"
             frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen
+            referrerpolicy="no-referrer"
+            loading="lazy"
+            importance="high"
+            sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation allow-popups-to-escape-sandbox"
+            style="border: none;"
           ></iframe>
         </div>
       </div>
@@ -46,14 +51,19 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import videosData from '@/data/videos.json'
+import videoData from '@/data/videos.json'
 
 const showVideo = ref(false)
 const currentVideo = ref(null)
 const videos = ref([])
 
+// 從 JSON 文件加載影片數據
+const loadVideos = () => {
+  videos.value = videoData.videos
+}
+
 onMounted(() => {
-  videos.value = videosData.videos
+  loadVideos()
 })
 
 const getThumbnail = (url) => {
@@ -63,7 +73,7 @@ const getThumbnail = (url) => {
 
 const getVideoEmbedUrl = (url) => {
   const videoId = url.match(/\/d\/([^/]+)/)?.[1]
-  return videoId ? `https://drive.google.com/file/d/${videoId}/preview` : ''
+  return videoId ? `https://drive.google.com/file/d/${videoId}/preview?usp=drivesdk` : ''
 }
 
 const playVideo = (video) => {
